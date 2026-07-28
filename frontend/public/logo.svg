@@ -3,12 +3,12 @@
   <defs>
     <style>
       :root {
-      --logo-color: #000000;
+      --logo-color: #ffffff;
       }
 
-      @media (prefers-color-scheme: dark) {
+      @media (prefers-color-scheme: light) {
       :root {
-      --logo-color: #ffffff;
+      --logo-color: #000000;
       }
       }
 
