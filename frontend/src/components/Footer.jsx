@@ -19,7 +19,7 @@ export default function Footer() {
                 {/* Logo */}
                 <div className="flex items-center justify-center gap-3">
                     <img
-                        src="/logo.svg"
+                        src="/logo-white.svg"
                         alt="Shores Electronics Logo"
                         className="h-8 w-auto"
                     />
