@@ -21,7 +21,7 @@ export default function Navbar() {
                     className="flex items-center gap-4 py-3 group"
                 >
                     <img
-                        src="/logo.svg"
+                        src="/logo-white.svg"
                         alt="Shores Electronics Logo"
                         className="h-10 w-10"
                     />
