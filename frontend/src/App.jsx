@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, Outlet } from "react-router";
+
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 
 export const Home = () => (
     <div className="p-8 sm:p-12 text-[#1925aa] font-mono">
@@ -39,9 +41,9 @@ export function Layout() {
         <div className="min-h-screen bg-white text-black font-mono selection:bg-[#1925aa] selection:text-white">
             <Navbar />
             <main className="max-w-7xl mx-auto min-h-[calc(100vh-80px)]">
-
                 <Outlet />
             </main>
+            <Footer />
         </div>
     );
 }
