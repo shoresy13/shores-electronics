@@ -4,11 +4,11 @@ import { ContactForm } from "./ContactForm";
 
 export const Hero = () => {
     return (
-        <div className="text-[#1925aa] font-mono selection:bg-[#1925aa] selection:text-white">
-            <section className="px-6 py-12 md:py-20 w-full max-w-[1600px] mx-auto min-h-[calc(100vh-80px)] flex flex-col justify-center">
+        <div className="text-[#1925aa] font-mono selection:bg-[#1925aa] selection:text-white border-b-4 border-[#1925aa]">
+            <section className="w-full max-w-[1600px] mx-auto px-6 py-12 lg:py-20">
 
                 {/* Title and Contact Form */}
-                <div className="flex flex-col lg:grid lg:grid-cols-12 gap-y-12 gap-x-12 lg:gap-x-16 2xl:gap-x-24 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 gap-x-12 lg:gap-x-16 2xl:gap-x-24 items-stretch">
                     <div className="lg:col-span-7 flex flex-col justify-between space-y-8">
                         <div>
                             <h1 className="text-[1.25rem] sm:text-2xl lg:text-3xl xl:text-4xl font-bold uppercase tracking-tight sm:tracking-wider leading-tight mb-4 border-b-2 border-[#1925aa] pb-4 whitespace-nowrap lg:whitespace-normal">
@@ -27,7 +27,7 @@ export const Hero = () => {
                     {/* Services CTA and Products CTA */}
                     <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
                         <CtaCard
-                            title="Custom Builds & Repairs "
+                            title="Custom Builds & Repairs"
                             description="Custom pcs tailored to any budget, plus free initial system diagnostics on all repair jobs."
                             imageLabel="[ SERVICES IMAGE PLACEHOLDER ]"
                             buttonText="Explore Services"

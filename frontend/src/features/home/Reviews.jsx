@@ -27,11 +27,11 @@ const REVIEWS = [
 
 export const Reviews = () => {
     return (
-        <section className="w-full bg-[#1925aa] text-white py-8 md:py-12 border-t-2 border-b-2 border-[#1925aa]">
-            <div className="max-w-7xl mx-auto px-6">
+        <section className="w-full bg-[#1925aa] text-white py-12 lg:py-20 border-t-2 border-b-2 border-[#1925aa]">
+            <div className="max-w-[1600px] mx-auto px-6">
 
                 {/* Header */}
-                <div className="mb-6 border-b-2 border-white pb-3 flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
+                <div className="mb-8 border-b-2 border-white pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
                     <div>
                         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono uppercase tracking-wider">
                             WHAT CUSTOMERS SAY
@@ -43,11 +43,11 @@ export const Reviews = () => {
                 </div>
 
                 {/* Reviews Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
                     {REVIEWS.map((review) => (
                         <Card
                             key={review.id}
-                            padding="p-4 md:p-5"
+                            padding="p-5 md:p-6"
                             className="bg-white text-[#1925aa] flex flex-col justify-between"
                         >
                             <div>
