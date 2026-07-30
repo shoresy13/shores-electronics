@@ -11,7 +11,7 @@ export const Hero = () => {
                 <div className="flex flex-col lg:grid lg:grid-cols-12 gap-y-12 gap-x-12 lg:gap-x-16 items-stretch">
                     <div className="lg:col-span-7 flex flex-col justify-between space-y-8">
                         <div>
-                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-wider leading-tight mb-4 border-b-2 border-[#1925aa] pb-4">
+                            <h1 className="text-[1.25rem] sm:text-2xl md:text-4xl font-bold uppercase tracking-tight sm:tracking-wider leading-tight mb-4 border-b-2 border-[#1925aa] pb-4 whitespace-nowrap">
                                 Custom PC builds and Repair
                             </h1>
                             <p className="text-sm md:text-base uppercase tracking-wide text-[#1925aa]/90 leading-relaxed">
