@@ -3,6 +3,7 @@ import { Routes, Route, Outlet } from "react-router";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import NoticeModal from "./components/NoticeModal.jsx";
 
 import { Home } from "./pages/Home.jsx";
 import { Services } from "./pages/Services.jsx";
@@ -12,6 +13,7 @@ import { Contact } from "./pages/Contact.jsx";
 export function Layout() {
     return (
         <div className="min-h-screen bg-white text-black font-mono selection:bg-[#1925aa] selection:text-white flex flex-col">
+            <NoticeModal />
             <Navbar />
             <main className="w-full grow min-h-[calc(100vh-80px)]">
                 <Outlet />
