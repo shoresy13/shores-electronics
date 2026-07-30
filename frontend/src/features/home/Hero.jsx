@@ -4,7 +4,7 @@ import { ContactForm } from "./ContactForm";
 
 export const Hero = () => {
     return (
-        <div className="text-[#1925aa] font-mono selection:bg-[#1925aa] selection:text-white border-b-4 border-[#1925aa]">
+        <div className="text-[#1925aa] font-mono border-b-4 border-[#1925aa]">
             <section className="w-full max-w-[1600px] mx-auto px-6 py-12 lg:py-20">
 
                 {/* Title and Contact Form */}
@@ -23,6 +23,9 @@ export const Hero = () => {
                             <ContactForm />
                         </div>
                     </div>
+
+                    {/* Mobile Separator */}
+                    <div className="border-b-2 border-[#1925aa] lg:hidden" />
 
                     {/* Services CTA and Products CTA */}
                     <div className="lg:col-span-5 flex flex-col justify-between space-y-8">

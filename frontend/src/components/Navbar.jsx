@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router";
 
 export default function Navbar() {
@@ -13,7 +13,7 @@ export default function Navbar() {
 
     return (
         <nav className="relative bg-[#1925aa] text-white font-mono border-b border-white/20 select-none">
-            <div className="max-w-[1600px] mx-auto px-6 sm:px-6 flex items-stretch justify-between h-20">
+            <div className="max-w-[1600px] mx-auto px-6 flex items-stretch justify-between h-20">
 
                 {/* Logo */}
                 <NavLink
@@ -32,30 +32,28 @@ export default function Navbar() {
                 </NavLink>
 
                 {/* Desktop Navlinks */}
-                <div className="hidden md:flex items-center space-x-6">
-                    <div className="flex items-center space-x-6 text-xs uppercase tracking-widest">
-                        {links.map((link, index) => (
-                            <div key={link.name} className="flex items-center space-x-6">
-                                <NavLink
-                                    to={link.path}
-                                    className={({ isActive }) =>
-                                        `transition-all duration-150 py-1 ${
-                                            isActive
-                                                ? "text-white font-extrabold underline underline-offset-8 decoration-white decoration-2"
-                                                : "text-white/70 hover:text-white hover:underline hover:underline-offset-8 decoration-white/40"
-                                        }`
-                                    }
-                                >
-                                    {link.name}
-                                </NavLink>
+                <div className="hidden md:flex items-center space-x-6 text-xs uppercase tracking-widest">
+                    {links.map((link, index) => (
+                        <React.Fragment key={link.name}>
+                            <NavLink
+                                to={link.path}
+                                className={({ isActive }) =>
+                                    `transition-all duration-150 py-1 ${
+                                        isActive
+                                            ? "text-white font-extrabold underline underline-offset-8 decoration-white decoration-2"
+                                            : "text-white/70 hover:text-white hover:underline hover:underline-offset-8 decoration-white/40"
+                                    }`
+                                }
+                            >
+                                {link.name}
+                            </NavLink>
 
-                                {/* Separator Bar */}
-                                {index < links.length - 1 && (
-                                    <span className="text-white/40 font-normal select-none">|</span>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                            {/* Separator Bar */}
+                            {index < links.length - 1 && (
+                                <span className="text-white/40 font-normal select-none">|</span>
+                            )}
+                        </React.Fragment>
+                    ))}
                 </div>
 
                 {/* Mobile Menu Toggle */}
