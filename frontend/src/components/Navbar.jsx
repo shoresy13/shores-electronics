@@ -13,7 +13,7 @@ export default function Navbar() {
 
     return (
         <nav className="relative bg-[#1925aa] text-white font-mono border-b border-white/20 select-none">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-stretch justify-between h-20">
+            <div className="max-w-[1600px] mx-auto px-6 sm:px-6 flex items-stretch justify-between h-20">
 
                 {/* Logo */}
                 <NavLink
@@ -49,7 +49,7 @@ export default function Navbar() {
                                     {link.name}
                                 </NavLink>
 
-                                {/* Seperator Bar */}
+                                {/* Separator Bar */}
                                 {index < links.length - 1 && (
                                     <span className="text-white/40 font-normal select-none">|</span>
                                 )}
@@ -65,11 +65,11 @@ export default function Navbar() {
                         className="relative flex flex-col justify-center items-center w-10 h-10 border border-white/30 p-2 focus:outline-none"
                         onClick={() => setOpen(!open)}
                     >
-            <span
-                className={`block h-0.5 w-5 bg-white transition-all duration-300 absolute ${
-                    open ? "rotate-45" : "-translate-y-1.5"
-                }`}
-            />
+                        <span
+                            className={`block h-0.5 w-5 bg-white transition-all duration-300 absolute ${
+                                open ? "rotate-45" : "-translate-y-1.5"
+                            }`}
+                        />
                         <span
                             className={`block h-0.5 w-5 bg-white transition-all duration-300 ${
                                 open ? "opacity-0 scale-0" : "opacity-100"
