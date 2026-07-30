@@ -10,8 +10,8 @@ export const ContactForm = () => {
     };
 
     return (
-        <Card padding="p-6 sm:p-8">
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <Card padding="p-6 sm:p-8" className="h-full">
+            <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between space-y-4">
                 <div>
                     <label className="block text-xs uppercase tracking-widest font-bold mb-1">
                         Name
@@ -40,17 +40,16 @@ export const ContactForm = () => {
                     />
                 </div>
 
-                <div>
+                <div className="flex-1 flex flex-col">
                     <label className="block text-xs uppercase tracking-widest font-bold mb-1">
                         Message
                     </label>
                     <textarea
-                        rows="3"
                         required
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         placeholder="DESCRIBE YOUR NEEDS..."
-                        className="w-full bg-transparent border border-[#1925aa] px-3 py-2 text-xs uppercase tracking-wider focus:outline-none focus:ring-1 focus:ring-[#1925aa] placeholder-[#1925aa]/40 resize-none"
+                        className="w-full flex-1 min-h-20 bg-transparent border border-[#1925aa] px-3 py-2 text-xs uppercase tracking-wider focus:outline-none focus:ring-1 focus:ring-[#1925aa] placeholder-[#1925aa]/40 resize-none"
                     ></textarea>
                 </div>
 
