@@ -9,6 +9,7 @@ import { Home } from "./pages/Home.jsx";
 import { Services } from "./pages/Services.jsx";
 import { Products } from "./pages/Products.jsx";
 import { Contact } from "./pages/Contact.jsx";
+import { Login } from "./pages/Login.jsx";
 
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from "./pages/TermsOfService";
@@ -34,6 +35,7 @@ export default function App() {
                 <Route path="services" element={<Services />} />
                 <Route path="products" element={<Products />} />
                 <Route path="contact" element={<Contact />} />
+                <Route path="login" element={<Login />} /> {/* <--- 2. Add Login Route */}
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-of-service" element={<TermsOfService />} />
             </Route>
