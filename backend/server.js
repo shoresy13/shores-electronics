@@ -36,11 +36,6 @@ app.use(
 
 app.use(express.json());
 
-// Test Route
-app.get('/api/health', (req, res) => {
-    res.status(200).json({ status: 'OK', message: 'API is running' });
-});
-
 const startServer = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
