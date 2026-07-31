@@ -10,6 +10,9 @@ import { Services } from "./pages/Services.jsx";
 import { Products } from "./pages/Products.jsx";
 import { Contact } from "./pages/Contact.jsx";
 
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from "./pages/TermsOfService";
+
 export function Layout() {
     return (
         <div className="min-h-screen bg-white text-black font-mono selection:bg-[#1925aa] selection:text-white flex flex-col">
@@ -31,6 +34,8 @@ export default function App() {
                 <Route path="services" element={<Services />} />
                 <Route path="products" element={<Products />} />
                 <Route path="contact" element={<Contact />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
             </Route>
         </Routes>
     );
