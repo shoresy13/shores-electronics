@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "./Card";
 
+const STORAGE_KEY = "shores_notice_acknowledged";
+
 export default function NoticeModal() {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        const isAcknowledged = sessionStorage.getItem(STORAGE_KEY);
+        if (!isAcknowledged) {
+            setIsOpen(true);
+        }
+    }, []);
+
+    const handleAcknowledge = () => {
+        sessionStorage.setItem(STORAGE_KEY, "true");
+        setIsOpen(false);
+    };
 
     if (!isOpen) return null;
 
@@ -22,7 +36,7 @@ export default function NoticeModal() {
                 </div>
 
                 <button
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleAcknowledge}
                     className="w-full py-3 px-6 bg-[#1925aa] text-white text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-white hover:text-[#1925aa] border-2 border-[#1925aa] transition-colors duration-150 active:translate-y-0.5 cursor-pointer"
                 >
                     Acknowledge & Continue
