@@ -34,9 +34,9 @@ export default function Footer() {
                         <img
                             src="/logo-white.svg"
                             alt="Shores Electronics Logo"
-                            className="h-8 w-auto"
+                            className="h-8 w-auto shrink-0"
                         />
-                        <span className="text-base font-bold tracking-wider">
+                        <span className="font-['Zalando_Sans_Expanded'] font-bold tracking-wider text-sm uppercase text-white leading-none">
                             SHORES ELECTRONICS
                         </span>
                     </div>

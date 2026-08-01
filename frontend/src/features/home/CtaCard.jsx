@@ -12,7 +12,7 @@ export const CtaCard = ({
                             padding = "p-6"
                         }) => {
     return (
-        <Card padding={padding} className={className}>
+        <Card padding={padding} className={`font-mono ${className}`}>
             <div className="flex flex-col flex-1 justify-between mb-4 gap-3">
 
                 {/* Image Placeholder */}
@@ -24,7 +24,7 @@ export const CtaCard = ({
 
                 {/* Text */}
                 <div>
-                    <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider mb-1">
+                    <h2 className="font-['Zalando_Sans_Expanded'] text-base sm:text-lg font-bold uppercase tracking-wider mb-1">
                         {title}
                     </h2>
                     <p className="text-xs uppercase tracking-wide text-[#1925aa]/80 leading-relaxed">
