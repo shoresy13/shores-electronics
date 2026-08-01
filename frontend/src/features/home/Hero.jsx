@@ -11,8 +11,8 @@ export const Hero = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 gap-x-12 lg:gap-x-16 2xl:gap-x-24 items-stretch">
                     <div className="lg:col-span-7 flex flex-col justify-between space-y-8">
                         <div>
-                            <h1 className="font-['Zalando_Sans_Expanded'] text-[1.25rem] sm:text-2xl lg:text-3xl xl:text-4xl font-bold uppercase tracking-wider leading-tight mb-6 border-b-2 border-[#1925aa] pb-4 whitespace-nowrap lg:whitespace-normal">
-                                Custom PC builds and Repair
+                            <h1 className="font-['Zalando_Sans_Expanded'] text-[clamp(0.7rem,3.8vw,2.25rem)] font-bold uppercase tracking-wider whitespace-nowrap border-b-2 border-[#1925aa] pb-2 sm:pb-3 md:pb-4 mb-4 sm:mb-6">
+                                CUSTOM PC BUILDS AND REPAIR
                             </h1>
                             <p className="font-mono text-xs sm:text-sm xl:text-base uppercase tracking-wide text-[#1925aa]/90 leading-relaxed">
                                 HI, I'M JACOB, A THIRD-YEAR CYBER SECURITY STUDENT AT NEWCASTLE UNIVERSITY. IF YOU'RE LOOKING FOR A NEW PC OR WANT TO UPGRADE YOUR CURRENT RIG, I BUILD, OPTIMISE AND REPAIR CUSTOM DESKTOP SETUPS TAILORED TO YOUR EXACT BUDGET AND NEEDS. DROP ME A MESSAGE TO GET A CUSTOM QUOTE, OR EXPLORE MY PREBUILT SYSTEMS!

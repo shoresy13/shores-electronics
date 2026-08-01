@@ -23,11 +23,11 @@ export default function Navbar() {
                     <img
                         src="/logo-white.svg"
                         alt="Shores Electronics Logo"
-                        className="h-10 w-10 shrink-0"
+                        className="h-9 w-9 sm:h-10 sm:w-10 shrink-0"
                     />
-                    <div className="flex flex-col font-['Zalando_Sans_Expanded'] font-bold tracking-wider text-[clamp(0.3rem,2vw,1.1rem)] uppercase text-white leading-tight">
-                        <span>Shores</span>
-                        <span>Electronics</span>
+                    <div className="flex flex-col font-['Zalando_Sans_Expanded'] font-bold tracking-wider text-xs sm:text-sm md:text-base uppercase text-white leading-tight">
+                        <span>SHORES</span>
+                        <span>ELECTRONICS</span>
                     </div>
                 </NavLink>
 
