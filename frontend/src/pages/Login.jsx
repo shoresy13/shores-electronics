@@ -34,7 +34,7 @@ export const Login = () => {
             <div className="w-full max-w-150 px-6">
                 <Card padding="p-6 sm:p-8">
                     <div className="border-b border-[#1925aa] pb-4 mb-6">
-                        <h1 className="text-xl sm:text-2xl font-bold uppercase tracking-widest">
+                        <h1 className="font-['Zalando_Sans_Expanded'] text-lg sm:text-2xl font-bold uppercase tracking-wider whitespace-nowrap">
                             Admin Login
                         </h1>
                     </div>

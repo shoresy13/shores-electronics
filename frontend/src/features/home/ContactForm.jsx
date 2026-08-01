@@ -35,12 +35,12 @@ export const ContactForm = () => {
 
                 {/* Status Banners */}
                 {status.error && (
-                    <div className="p-3 border border-[#1925aa] bg-red-100 text-red-700 font-bold text-xs uppercase tracking-wider">
+                    <div className="p-3 border border-[#1925aa] bg-[#1925aa]/10 text-[#1925aa] font-bold text-xs uppercase tracking-wider">
                         {status.error}
                     </div>
                 )}
                 {status.success && (
-                    <div className="p-3 border border-[#1925aa] bg-green-100 text-green-800 font-bold text-xs uppercase tracking-wider">
+                    <div className="p-3 border border-[#1925aa] bg-[#1925aa]/10 text-[#1925aa] font-bold text-xs uppercase tracking-wider">
                         {status.success}
                     </div>
                 )}
