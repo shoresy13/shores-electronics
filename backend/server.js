@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import contactRoutes from "./routes/contactRoutes.js";
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use("/api/contact", contactRoutes);
 
 const startServer = async () => {
     try {

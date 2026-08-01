@@ -33,7 +33,8 @@ export const Reviews = () => {
                 {/* Header */}
                 <div className="mb-8 border-b-2 border-white pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
                     <div>
-                        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-mono uppercase tracking-wider">
+                        {/* Section Title - Zalando Sans Expanded */}
+                        <h2 className="font-['Zalando_Sans_Expanded'] text-lg sm:text-xl md:text-2xlfont-bold uppercase tracking-wider">
                             WHAT CUSTOMERS SAY
                         </h2>
                     </div>
@@ -60,7 +61,7 @@ export const Reviews = () => {
                                     </span>
                                 </div>
 
-                                {/* Review Body */}
+                                {/* Review Body - Monospace */}
                                 <p className="text-xs font-mono uppercase tracking-wide leading-relaxed mb-4 text-[#1925aa]/90">
                                     "{review.comment}"
                                 </p>

@@ -18,14 +18,14 @@ export default function Navbar() {
                 {/* Logo */}
                 <NavLink
                     to="/"
-                    className="flex items-center gap-4 py-3 group"
+                    className="flex items-center gap-3 py-3 group"
                 >
                     <img
                         src="/logo-white.svg"
                         alt="Shores Electronics Logo"
-                        className="h-10 w-10"
+                        className="h-10 w-10 shrink-0"
                     />
-                    <div className="flex flex-col uppercase font-bold tracking-widest text-white text-xs sm:text-sm leading-tight">
+                    <div className="flex flex-col font-['Zalando_Sans_Expanded'] font-bold tracking-wider text-[clamp(0.3rem,2vw,1.1rem)] uppercase text-white leading-tight">
                         <span>Shores</span>
                         <span>Electronics</span>
                     </div>
