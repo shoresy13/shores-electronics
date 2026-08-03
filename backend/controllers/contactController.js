@@ -1,18 +1,26 @@
 import nodemailer from "nodemailer";
 import dns from "dns";
 
+dns.setDefaultResultOrder("ipv4first");
+
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     connectionTimeout: 10000,
+    socketTimeout: 10000,
     dnsTimeout: 10000,
-    lookup: (hostname, options, callback) => {
-        return dns.lookup(hostname, { family: 4 }, callback);
-    },
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
+    },
+    lookup: (hostname, options, callback) => {
+        dns.resolve4(hostname, (err, addresses) => {
+            if (err || !addresses || !addresses.length) {
+                return callback(err || new Error("Failed to resolve IPv4 address"));
+            }
+            callback(null, addresses[0], 4);
+        });
     },
     tls: {
         rejectUnauthorized: false
@@ -125,11 +133,11 @@ export const sendContactEmail = async (req, res) => {
             transporter.sendMail(customerMailOptions),
         ]);
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "MESSAGE SENT SUCCESSFULLY. PLEASE CHECK YOUR INBOX AND SPAM FOLDER FOR CONFIRMATION."
         });
     } catch (error) {
         console.error("Nodemailer error:", error);
-        res.status(500).json({ message: "MESSAGE SENDING FAILED." });
+        return res.status(500).json({ message: "MESSAGE SENDING FAILED." });
     }
 };
