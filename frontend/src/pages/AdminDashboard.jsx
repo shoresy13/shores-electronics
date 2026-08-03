@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../components/Card";
+import API from "../../utils/axios.js";
 
 const initialSpecs = {
     cpu: "",
@@ -37,7 +38,6 @@ export const AdminDashboard = () => {
             : "";
 
         return {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         };
     };
@@ -45,12 +45,10 @@ export const AdminDashboard = () => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const res = await fetch("/api/products");
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || "Failed to fetch products");
+            const { data } = await API.get("/api/products");
             setProducts(data);
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.message || err.message || "Failed to fetch products");
         } finally {
             setLoading(false);
         }
@@ -86,20 +84,12 @@ export const AdminDashboard = () => {
             setUploading(true);
             setError(null);
 
-            const token = localStorage.getItem("userInfo")
-                ? JSON.parse(localStorage.getItem("userInfo")).token
-                : "";
-
-            const res = await fetch("/api/products/upload", {
-                method: "POST",
+            const { data: uploadedUrls } = await API.post("/api/products/upload", formDataUpload, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                body: formDataUpload
+                    ...getAuthHeaders(),
+                    "Content-Type": "multipart/form-data"
+                }
             });
-
-            const uploadedUrls = await res.json();
-            if (!res.ok) throw new Error(uploadedUrls.message || "Image upload failed");
 
             const existingImages = formData.images
                 ? formData.images.split(",").map((s) => s.trim()).filter(Boolean)
@@ -109,7 +99,7 @@ export const AdminDashboard = () => {
 
             setFormData((prev) => ({ ...prev, images: combined }));
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.message || err.message || "Image upload failed");
         } finally {
             setUploading(false);
         }
@@ -149,22 +139,18 @@ export const AdminDashboard = () => {
         };
 
         const url = editingId ? `/api/products/${editingId}` : "/api/products";
-        const method = editingId ? "PUT" : "POST";
 
         try {
-            const res = await fetch(url, {
-                method,
-                headers: getAuthHeaders(),
-                body: JSON.stringify(payload)
-            });
-
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || "Operation failed");
+            if (editingId) {
+                await API.put(url, payload, { headers: getAuthHeaders() });
+            } else {
+                await API.post(url, payload, { headers: getAuthHeaders() });
+            }
 
             handleCancel();
             fetchProducts();
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.message || err.message || "Operation failed");
         }
     };
 
@@ -172,17 +158,10 @@ export const AdminDashboard = () => {
         if (!window.confirm("CONFIRM DELETE: Remove product record permanently?")) return;
 
         try {
-            const res = await fetch(`/api/products/${id}`, {
-                method: "DELETE",
-                headers: getAuthHeaders()
-            });
-
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || "Failed to delete product");
-
+            await API.delete(`/api/products/${id}`, { headers: getAuthHeaders() });
             fetchProducts();
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.message || err.message || "Failed to delete product");
         }
     };
 
