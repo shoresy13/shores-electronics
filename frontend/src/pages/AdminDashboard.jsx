@@ -25,6 +25,7 @@ const initialFormState = {
 export const AdminDashboard = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
     const [formData, setFormData] = useState(initialFormState);
     const [editingId, setEditingId] = useState(null);
@@ -70,6 +71,46 @@ export const AdminDashboard = () => {
                 [e.target.name]: e.target.value
             }
         });
+    };
+
+    const handleFileUpload = async (e) => {
+        const files = Array.from(e.target.files);
+        if (!files.length) return;
+
+        const formDataUpload = new FormData();
+        files.forEach((file) => formDataUpload.append("images", file));
+
+        try {
+            setUploading(true);
+            setError(null);
+
+            const token = localStorage.getItem("userInfo")
+                ? JSON.parse(localStorage.getItem("userInfo")).token
+                : "";
+
+            const res = await fetch("/api/products/upload", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formDataUpload
+            });
+
+            const uploadedUrls = await res.json();
+            if (!res.ok) throw new Error(uploadedUrls.message || "Image upload failed");
+
+            const existingImages = formData.images
+                ? formData.images.split(",").map((s) => s.trim()).filter(Boolean)
+                : [];
+
+            const combined = [...existingImages, ...uploadedUrls].join(", ");
+
+            setFormData((prev) => ({ ...prev, images: combined }));
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleEdit = (product) => {
@@ -169,7 +210,7 @@ export const AdminDashboard = () => {
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
-                                            placeholder="e.g. TITAN WORKSTATION MK-I"
+                                            placeholder="Enter name"
                                             className="w-full bg-transparent border border-[#1925aa] p-2 focus:outline-none"
                                         />
                                     </div>
@@ -184,7 +225,7 @@ export const AdminDashboard = () => {
                                                 onChange={handleChange}
                                                 required
                                                 step="0.01"
-                                                placeholder="1499.99"
+                                                placeholder="Enter price"
                                                 className="w-full bg-transparent border border-[#1925aa] p-2 focus:outline-none"
                                             />
                                         </div>
@@ -203,16 +244,29 @@ export const AdminDashboard = () => {
                                     </div>
 
                                     <div>
-                                        <label className="block font-bold mb-1 tracking-wider">
-                                            Image URLs * <span className="opacity-60 text-[10px]">(Comma separated)</span>
-                                        </label>
+                                        <div className="flex justify-between items-center mb-1">
+                                            <label className="font-bold tracking-wider">
+                                                Images * <span className="opacity-60 text-[10px]"></span>
+                                            </label>
+                                            <label className="cursor-pointer bg-[#1925aa]/10 hover:bg-[#1925aa] hover:text-white border border-[#1925aa] text-[10px] px-2 py-0.5 font-bold transition-colors uppercase">
+                                                {uploading ? "[ UPLOADING... ]" : "[ + CHOOSE FILES ]"}
+                                                <input
+                                                    type="file"
+                                                    multiple
+                                                    accept="image/*"
+                                                    onChange={handleFileUpload}
+                                                    className="hidden"
+                                                    disabled={uploading}
+                                                />
+                                            </label>
+                                        </div>
                                         <input
                                             type="text"
                                             name="images"
                                             value={formData.images}
                                             onChange={handleChange}
                                             required
-                                            placeholder="/assets/build.jpg, /assets/repair.jpg"
+                                            placeholder="Upload images"
                                             className="w-full bg-transparent border border-[#1925aa] p-2 focus:outline-none"
                                         />
                                     </div>
@@ -225,7 +279,7 @@ export const AdminDashboard = () => {
                                             value={formData.description}
                                             onChange={handleChange}
                                             required
-                                            placeholder="Detailed system build summary and overview..."
+                                            placeholder="Enter description"
                                             className="w-full bg-transparent border border-[#1925aa] p-2 focus:outline-none resize-none"
                                         />
                                     </div>
@@ -257,7 +311,8 @@ export const AdminDashboard = () => {
                                     <div className="pt-3 flex gap-3">
                                         <button
                                             type="submit"
-                                            className="flex-1 bg-[#1925aa] text-white font-bold py-2.5 uppercase tracking-widest hover:bg-white hover:text-[#1925aa] border border-[#1925aa] transition-colors"
+                                            disabled={uploading}
+                                            className="flex-1 bg-[#1925aa] text-white font-bold py-2.5 uppercase tracking-widest hover:bg-white hover:text-[#1925aa] border border-[#1925aa] transition-colors disabled:opacity-50"
                                         >
                                             {editingId ? "SAVE RECORD" : "COMMIT ENTRY"}
                                         </button>
