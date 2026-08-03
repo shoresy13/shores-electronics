@@ -1,21 +1,27 @@
 import nodemailer from "nodemailer";
 
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    family: 4,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
 export const sendContactEmail = async (req, res) => {
     const { name, email, message } = req.body;
 
     if (!name || !email || !message) {
-        return res.status(400).json({ error: "ALL FIELDS REQUIRED." });
+        return res.status(400).json({ message: "ALL FIELDS REQUIRED." });
     }
 
     try {
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
-
         const sanitizedMessage = message.replace(/\n/g, "<br />");
         const fontStack = "Arial, Helvetica, sans-serif";
 
@@ -119,6 +125,6 @@ export const sendContactEmail = async (req, res) => {
         });
     } catch (error) {
         console.error("Nodemailer error:", error);
-        res.status(500).json({ error: "MESSAGE SENDING FAILED." });
+        res.status(500).json({ message: "MESSAGE SENDING FAILED." });
     }
 };
