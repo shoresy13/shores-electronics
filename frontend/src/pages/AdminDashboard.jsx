@@ -19,6 +19,7 @@ const initialFormState = {
     countInStock: 1,
     description: "",
     images: "",
+    isFeatured: false,
     specs: initialSpecs
 };
 
@@ -60,7 +61,8 @@ export const AdminDashboard = () => {
     }, []);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+        setFormData({ ...formData, [e.target.name]: value });
     };
 
     const handleSpecChange = (e) => {
@@ -121,6 +123,7 @@ export const AdminDashboard = () => {
             countInStock: product.countInStock ?? 1,
             description: product.description || "",
             images: Array.isArray(product.images) ? product.images.join(", ") : "",
+            isFeatured: Boolean(product.isFeatured),
             specs: {
                 ...initialSpecs,
                 ...(product.specs || {})
@@ -141,6 +144,7 @@ export const AdminDashboard = () => {
             ...formData,
             price: Number(formData.price),
             countInStock: Number(formData.countInStock),
+            isFeatured: Boolean(formData.isFeatured),
             images: formData.images.split(",").map((s) => s.trim()).filter(Boolean)
         };
 
@@ -284,6 +288,21 @@ export const AdminDashboard = () => {
                                         />
                                     </div>
 
+                                    {/* Featured Flag Checkbox */}
+                                    <div className="flex items-center gap-2 pt-1">
+                                        <input
+                                            type="checkbox"
+                                            id="isFeatured"
+                                            name="isFeatured"
+                                            checked={formData.isFeatured}
+                                            onChange={handleChange}
+                                            className="w-4 h-4 accent-[#1925aa] cursor-pointer"
+                                        />
+                                        <label htmlFor="isFeatured" className="font-bold tracking-wider cursor-pointer">
+                                            FLAG AS FEATURED BUILD
+                                        </label>
+                                    </div>
+
                                     {/* System Specs */}
                                     <div className="border-t border-[#1925aa]/20 pt-3 mt-3">
                                         <h3 className="font-['Zalando_Sans_Expanded'] text-xs font-bold uppercase tracking-wider mb-2.5">
@@ -360,7 +379,14 @@ export const AdminDashboard = () => {
                                         <tbody className="divide-y divide-[#1925aa]/20">
                                         {products.map((p) => (
                                             <tr key={p._id} className="hover:bg-[#1925aa]/5 transition-colors">
-                                                <td className="py-2.5 pr-2 font-bold">{p.name}</td>
+                                                <td className="py-2.5 pr-2 font-bold flex items-center gap-1.5">
+                                                    {p.name}
+                                                    {p.isFeatured && (
+                                                        <span className="bg-[#1925aa] text-white text-[9px] px-1 py-0.2 tracking-tighter">
+                                                            FT
+                                                        </span>
+                                                    )}
+                                                </td>
                                                 <td className="py-2.5 px-2">£{p.price?.toFixed(2)}</td>
                                                 <td className="py-2.5 px-2">
                                                         <span

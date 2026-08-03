@@ -19,6 +19,10 @@ const productSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Please add a description']
         },
+        isFeatured: {
+            type: Boolean,
+            default: false
+        },
         specs: {
             cpu: { type: String, default: '' },
             gpu: { type: String, default: '' },
