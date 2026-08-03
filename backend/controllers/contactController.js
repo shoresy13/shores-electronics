@@ -3,14 +3,16 @@ import dns from "dns";
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
+    connectionTimeout: 10000,
+    dnsTimeout: 10000,
     lookup: (hostname, options, callback) => {
         return dns.lookup(hostname, { family: 4 }, callback);
     },
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        pass: emailPass,
     },
     tls: {
         rejectUnauthorized: false
