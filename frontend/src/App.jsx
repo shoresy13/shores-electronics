@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Outlet } from "react-router";
+import { Routes, Route, Outlet, Navigate } from "react-router";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -9,10 +9,24 @@ import { Home } from "./pages/Home.jsx";
 import { Services } from "./pages/Services.jsx";
 import { Products } from "./pages/Products.jsx";
 import { Contact } from "./pages/Contact.jsx";
+
 import { Login } from "./pages/Login.jsx";
+import { AdminDashboard } from "./pages/AdminDashboard.jsx";
 
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from "./pages/TermsOfService";
+
+function ProtectedAdminRoute() {
+    const userInfo = localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo"))
+        : null;
+
+    if (userInfo && userInfo.token && userInfo.isAdmin) {
+        return <Outlet />;
+    }
+
+    return <Navigate to="/login" replace />;
+}
 
 export function Layout() {
     return (
@@ -35,9 +49,13 @@ export default function App() {
                 <Route path="services" element={<Services />} />
                 <Route path="products" element={<Products />} />
                 <Route path="contact" element={<Contact />} />
-                <Route path="login" element={<Login />} /> {/* <--- 2. Add Login Route */}
+                <Route path="login" element={<Login />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-of-service" element={<TermsOfService />} />
+
+                <Route element={<ProtectedAdminRoute />}>
+                    <Route path="admin-dashboard" element={<AdminDashboard />} />
+                </Route>
             </Route>
         </Routes>
     );

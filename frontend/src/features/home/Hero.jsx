@@ -2,6 +2,9 @@ import React from "react";
 import { CtaCard } from "./CtaCard";
 import { ContactForm } from "./ContactForm";
 
+import repairImg from "./assets/repair.jpg";
+import buildImg from "./assets/build.jpg";
+
 export const Hero = () => {
     return (
         <div className="text-[#1925aa] font-mono border-b-4 border-[#1925aa]">
@@ -31,7 +34,8 @@ export const Hero = () => {
                     <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
                         <CtaCard
                             title="Custom Builds & Repairs"
-                            description="Custom pcs tailored to any budget, free quotes plus free initial system diagnostics on all repair jobs. "
+                            description="Custom pcs tailored to any budget, free quotes plus free initial system diagnostics on all repair jobs."
+                            imageSrc={repairImg}
                             imageLabel="[ SERVICES IMAGE PLACEHOLDER ]"
                             buttonText="Explore Services"
                             buttonLink="/services"
@@ -41,6 +45,7 @@ export const Hero = () => {
                         <CtaCard
                             title="Pre-Built & Stock Systems"
                             description="Browse ready to order systems configured and tested by me. No bloatware, proffesionally built and sold at the price of parts."
+                            imageSrc={buildImg}
                             imageLabel="[ PRODUCTS IMAGE PLACEHOLDER ]"
                             buttonText="View Current Systems"
                             buttonLink="/products"

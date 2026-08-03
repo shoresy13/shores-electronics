@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import API from "../../utils/axios";
 import { Card } from "../components/Card.jsx";
 
@@ -7,6 +8,8 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,7 +21,7 @@ export const Login = () => {
             localStorage.setItem("userInfo", JSON.stringify(data));
             setLoading(false);
 
-            window.location.href = "/";
+            navigate("/admin-dashboard");
         } catch (err) {
             setLoading(false);
             setError(
@@ -34,7 +37,7 @@ export const Login = () => {
             <div className="w-full max-w-150 px-6">
                 <Card padding="p-6 sm:p-8">
                     <div className="border-b border-[#1925aa] pb-4 mb-6">
-                        <h1 className="text-xl sm:text-2xl font-bold uppercase tracking-widest">
+                        <h1 className="font-['Zalando_Sans_Expanded'] text-lg sm:text-2xl font-bold uppercase tracking-wider whitespace-nowrap">
                             Admin Login
                         </h1>
                     </div>
