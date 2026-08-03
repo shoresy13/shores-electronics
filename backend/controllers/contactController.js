@@ -1,31 +1,6 @@
-import nodemailer from "nodemailer";
-import dns from "dns";
+import { Resend } from "resend";
 
-dns.setDefaultResultOrder("ipv4first");
-
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    connectionTimeout: 10000,
-    socketTimeout: 10000,
-    dnsTimeout: 10000,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    lookup: (hostname, options, callback) => {
-        dns.resolve4(hostname, (err, addresses) => {
-            if (err || !addresses || !addresses.length) {
-                return callback(err || new Error("Failed to resolve IPv4 address"));
-            }
-            callback(null, addresses[0], 4);
-        });
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendContactEmail = async (req, res) => {
     const { name, email, message } = req.body;
@@ -39,9 +14,9 @@ export const sendContactEmail = async (req, res) => {
         const fontStack = "Arial, Helvetica, sans-serif";
 
         // ADMIN EMAIL
-        const adminMailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
+        const adminEmail = resend.emails.send({
+            from: "Shores Electronics <contact@shoreselectronics.co.uk>",
+            to: [process.env.EMAIL_USER],
             replyTo: email,
             subject: `[NEW MESSAGE] - ${name.toUpperCase()}`,
             text: `NAME: ${name}\nEMAIL: ${email}\n\nMESSAGE:\n${message}`,
@@ -74,12 +49,12 @@ export const sendContactEmail = async (req, res) => {
           </div>
         </div>
       `,
-        };
+        });
 
         // CUSTOMER EMAIL
-        const customerMailOptions = {
-            from: `"SHORES ELECTRONICS" <${process.env.EMAIL_USER}>`,
-            to: email,
+        const customerEmail = resend.emails.send({
+            from: "Shores Electronics <contact@shoreselectronics.co.uk>",
+            to: [email],
             subject: `[CONFIRMATION] We received your message`,
             text: `Hello ${name},\n\nThank you for contacting Shores Electronics. We have received your message:\n\n"${message}"\n\nWe will review your inquiry and get back to you as soon as possible.\n\nBest regards,\nJacob Lewis-Shores\nShores Electronics`,
             html: `
@@ -126,18 +101,15 @@ export const sendContactEmail = async (req, res) => {
           </div>
         </div>
       `,
-        };
+        });
 
-        await Promise.all([
-            transporter.sendMail(adminMailOptions),
-            transporter.sendMail(customerMailOptions),
-        ]);
+        await Promise.all([adminEmail, customerEmail]);
 
         return res.status(200).json({
             message: "MESSAGE SENT SUCCESSFULLY. PLEASE CHECK YOUR INBOX AND SPAM FOLDER FOR CONFIRMATION."
         });
     } catch (error) {
-        console.error("Nodemailer error:", error);
+        console.error("Resend error:", error);
         return res.status(500).json({ message: "MESSAGE SENDING FAILED." });
     }
 };
