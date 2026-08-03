@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import API from "../../../utils/axios";
+import axios from "axios";
 import { Card } from "../../components/Card.jsx";
 
 export const ContactForm = () => {
@@ -11,7 +11,10 @@ export const ContactForm = () => {
         setStatus({ loading: true, success: "", error: "" });
 
         try {
-            const { data } = await API.post("/api/contact", formData);
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/contact`,
+                formData
+            );
 
             setStatus({
                 loading: false,
