@@ -23,6 +23,7 @@ const allowedOrigins = [
     'https://shoreselectronics.co.uk',
     'https://www.shoreselectronics.co.uk',
     'http://localhost:5173',
+    'http://localhost:5000',
     'http://localhost:3000'
 ].filter(Boolean);
 
