@@ -1,15 +1,23 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: import.meta.env.PROD
+        ? 'https://shores-electronics-backend.onrender.com'
+        : 'http://localhost:5000',
 });
 
 API.interceptors.request.use((config) => {
     const userInfo = localStorage.getItem('userInfo');
 
     if (userInfo) {
-        const { token } = JSON.parse(userInfo);
-        config.headers.Authorization = `Bearer ${token}`;
+        try {
+            const { token } = JSON.parse(userInfo);
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        } catch (error) {
+            console.error("Error parsing userInfo from localStorage:", error);
+        }
     }
 
     return config;
