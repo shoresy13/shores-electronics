@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { Card } from "../../components/Card";
+import API from "../../../utils/axios.js";
 
 export const Featured = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -10,12 +11,9 @@ export const Featured = () => {
         const fetchFeatured = async () => {
             try {
                 setLoading(true);
-                const res = await fetch("/api/products");
-                const data = await res.json();
-                if (res.ok) {
-                    const featured = data.filter((p) => p.isFeatured);
-                    setFeaturedProducts(featured);
-                }
+                const { data } = await API.get("/api/products");
+                const featured = data.filter((p) => p.isFeatured);
+                setFeaturedProducts(featured);
             } catch (err) {
                 console.error("Error loading featured systems:", err);
             } finally {
@@ -39,7 +37,6 @@ export const Featured = () => {
                     </div>
 
                     <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-
                         <Link
                             to="/products"
                             className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider bg-[#1925aa] text-white hover:bg-transparent hover:text-[#1925aa] border border-[#1925aa] px-2.5 py-1 transition-all shrink-0 active:translate-y-px"
