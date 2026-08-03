@@ -5,6 +5,7 @@ import { Card } from "../../components/Card";
 export const CtaCard = ({
                             title,
                             description,
+                            imageSrc,
                             imageLabel,
                             buttonText,
                             buttonLink,
@@ -15,11 +16,18 @@ export const CtaCard = ({
         <Card padding={padding} className={`font-mono ${className}`}>
             <div className="flex flex-col flex-1 justify-between mb-4 gap-3">
 
-                {/* Image Placeholder */}
-                <div className="w-full min-h-35 flex-1 bg-[#1925aa]/10 border border-[#1925aa] flex items-center justify-center overflow-hidden">
-                    <span className="text-[11px] uppercase tracking-widest font-bold text-[#1925aa]/60">
-                        {imageLabel}
-                    </span>
+                <div className="w-full h-35 shrink-0 bg-[#1925aa]/10 border border-[#1925aa] flex items-center justify-center overflow-hidden">
+                    {imageSrc ? (
+                        <img
+                            src={imageSrc}
+                            alt={title}
+                            className="w-full h-full object-cover"
+                        />
+                    ) : (
+                        <span className="text-[11px] uppercase tracking-widest font-bold text-[#1925aa]/60">
+                            {imageLabel}
+                        </span>
+                    )}
                 </div>
 
                 {/* Text */}
