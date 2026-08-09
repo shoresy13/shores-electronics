@@ -16,6 +16,7 @@ export const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const [selectedImage, setSelectedImage] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -36,6 +37,24 @@ export const ProductDetail = () => {
 
         fetchProduct();
     }, [id]);
+
+    const handleBuyNow = async () => {
+        try {
+            setCheckoutLoading(true);
+            const { data } = await API.post("/api/payments/create-checkout-session", {
+                productId: product._id,
+            });
+
+            if (data.url) {
+                window.location.href = data.url;
+            }
+        } catch (err) {
+            console.error("Checkout Error:", err);
+            alert(err.response?.data?.message || "CHECKOUT ERROR OR OUT OF STOCK");
+        } finally {
+            setCheckoutLoading(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -73,6 +92,7 @@ export const ProductDetail = () => {
     }
 
     const validSpecs = product.specs ? Object.entries(product.specs).filter(([_, val]) => Boolean(val)) : [];
+    const isOutOfStock = product.stock <= 0 || product.inStock === false;
 
     return (
         <div className="text-[#1925aa] font-mono">
@@ -217,12 +237,22 @@ export const ProductDetail = () => {
 
                                 {/* Action Buttons */}
                                 <div className="pt-3 space-y-1.5 shrink-0">
-                                    <Link
-                                        to={`/contact?subject=Inquiry regarding ${encodeURIComponent(product.name)}`}
-                                        className="block w-full text-center bg-[#1925aa] text-white font-mono text-xs font-bold py-2.5 uppercase tracking-widest hover:bg-transparent hover:text-[#1925aa] border border-[#1925aa] transition-all"
+                                    <button
+                                        onClick={handleBuyNow}
+                                        disabled={checkoutLoading || isOutOfStock}
+                                        className={`block w-full text-center font-mono text-xs font-bold py-2.5 uppercase tracking-widest border transition-all ${
+                                            isOutOfStock || checkoutLoading
+                                                ? "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"
+                                                : "bg-[#1925aa] text-white border-[#1925aa] hover:bg-transparent hover:text-[#1925aa] cursor-pointer"
+                                        }`}
                                     >
-                                        BUY NOW
-                                    </Link>
+                                        {checkoutLoading
+                                            ? "INITIALISING CHECKOUT..."
+                                            : isOutOfStock
+                                                ? "OUT OF STOCK"
+                                                : "CHECKOUT WITH STRIPE"}
+                                    </button>
+
                                     <Link
                                         to="/products"
                                         className="block w-full text-center bg-transparent text-[#1925aa] font-mono text-xs font-bold py-0.5 uppercase tracking-wider hover:underline"
