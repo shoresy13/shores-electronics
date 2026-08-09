@@ -1,5 +1,28 @@
 import mongoose from 'mongoose';
 
+const benchmarkSchema = new mongoose.Schema(
+    {
+        game: {
+            type: String,
+            required: [true, 'Please add a game title'],
+            trim: true
+        },
+        resolution: {
+            type: String,
+            default: '1080P'
+        },
+        settings: {
+            type: String,
+            default: 'ULTRA'
+        },
+        fps: {
+            type: Number,
+            required: [true, 'Please add FPS result']
+        }
+    },
+    { _id: false }
+);
+
 const productSchema = new mongoose.Schema(
     {
         name: {
@@ -34,6 +57,7 @@ const productSchema = new mongoose.Schema(
             case: { type: String, default: '' },
             os: { type: String, default: '' }
         },
+        benchmarks: [benchmarkSchema],
         price: {
             type: Number,
             required: [true, 'Please add a price (£)'],

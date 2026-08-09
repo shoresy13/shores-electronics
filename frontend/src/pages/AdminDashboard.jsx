@@ -21,7 +21,8 @@ const initialFormState = {
     description: "",
     images: "",
     isFeatured: false,
-    specs: initialSpecs
+    specs: initialSpecs,
+    benchmarks: []
 };
 
 export const AdminDashboard = () => {
@@ -73,6 +74,29 @@ export const AdminDashboard = () => {
         });
     };
 
+    const handleAddBenchmark = () => {
+        setFormData((prev) => ({
+            ...prev,
+            benchmarks: [
+                ...prev.benchmarks,
+                { game: "", resolution: "1080P", settings: "ULTRA", fps: "" }
+            ]
+        }));
+    };
+
+    const handleRemoveBenchmark = (index) => {
+        setFormData((prev) => ({
+            ...prev,
+            benchmarks: prev.benchmarks.filter((_, i) => i !== index)
+        }));
+    };
+
+    const handleBenchmarkChange = (index, field, value) => {
+        const updated = [...formData.benchmarks];
+        updated[index][field] = value;
+        setFormData({ ...formData, benchmarks: updated });
+    };
+
     const handleFileUpload = async (e) => {
         const files = Array.from(e.target.files);
         if (!files.length) return;
@@ -117,7 +141,15 @@ export const AdminDashboard = () => {
             specs: {
                 ...initialSpecs,
                 ...(product.specs || {})
-            }
+            },
+            benchmarks: Array.isArray(product.benchmarks)
+                ? product.benchmarks.map((b) => ({
+                    game: b.game || "",
+                    resolution: b.resolution || "1080P",
+                    settings: b.settings || "ULTRA",
+                    fps: b.fps ?? ""
+                }))
+                : []
         });
     };
 
@@ -130,12 +162,22 @@ export const AdminDashboard = () => {
         e.preventDefault();
         setError(null);
 
+        const cleanBenchmarks = formData.benchmarks
+            .filter((b) => b.game.trim() !== "" && b.fps !== "")
+            .map((b) => ({
+                game: b.game.trim(),
+                resolution: b.resolution.trim() || "1080P",
+                settings: b.settings.trim() || "ULTRA",
+                fps: Number(b.fps)
+            }));
+
         const payload = {
             ...formData,
             price: Number(formData.price),
             countInStock: Number(formData.countInStock),
             isFeatured: Boolean(formData.isFeatured),
-            images: formData.images.split(",").map((s) => s.trim()).filter(Boolean)
+            images: formData.images.split(",").map((s) => s.trim()).filter(Boolean),
+            benchmarks: cleanBenchmarks
         };
 
         const url = editingId ? `/api/products/${editingId}` : "/api/products";
@@ -304,6 +346,70 @@ export const AdminDashboard = () => {
                                                 </div>
                                             ))}
                                         </div>
+                                    </div>
+
+                                    {/* Game Benchmarks Section */}
+                                    <div className="border-t border-[#1925aa]/20 pt-3 mt-3">
+                                        <div className="flex justify-between items-center mb-2.5">
+                                            <h3 className="font-['Zalando_Sans_Expanded'] text-xs font-bold uppercase tracking-wider">
+                                                GAME BENCHMARKS
+                                            </h3>
+                                            <button
+                                                type="button"
+                                                onClick={handleAddBenchmark}
+                                                className="bg-[#1925aa]/10 hover:bg-[#1925aa] hover:text-white border border-[#1925aa] text-[10px] px-2 py-0.5 font-bold transition-colors uppercase"
+                                            >
+                                                + ADD BENCHMARK
+                                            </button>
+                                        </div>
+
+                                        {formData.benchmarks.length === 0 ? (
+                                            <div className="text-[10px] opacity-60 text-center py-2 border border-dashed border-[#1925aa]/30 uppercase">
+                                                NO BENCHMARKS FLAGGED
+                                            </div>
+                                        ) : (
+                                            <div className="space-y-2">
+                                                {formData.benchmarks.map((bm, index) => (
+                                                    <div key={index} className="grid grid-cols-12 gap-1.5 items-center">
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Game"
+                                                            value={bm.game}
+                                                            onChange={(e) => handleBenchmarkChange(index, "game", e.target.value)}
+                                                            className="col-span-4 bg-transparent border border-[#1925aa] p-1 text-[11px] focus:outline-none"
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Res"
+                                                            value={bm.resolution}
+                                                            onChange={(e) => handleBenchmarkChange(index, "resolution", e.target.value)}
+                                                            className="col-span-2 bg-transparent border border-[#1925aa] p-1 text-[11px] focus:outline-none"
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Settings"
+                                                            value={bm.settings}
+                                                            onChange={(e) => handleBenchmarkChange(index, "settings", e.target.value)}
+                                                            className="col-span-3 bg-transparent border border-[#1925aa] p-1 text-[11px] focus:outline-none"
+                                                        />
+                                                        <input
+                                                            type="number"
+                                                            placeholder="FPS"
+                                                            value={bm.fps}
+                                                            onChange={(e) => handleBenchmarkChange(index, "fps", e.target.value)}
+                                                            className="col-span-2 bg-transparent border border-[#1925aa] p-1 text-[11px] focus:outline-none"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleRemoveBenchmark(index)}
+                                                            className="col-span-1 text-red-600 font-bold hover:opacity-70 text-center"
+                                                        >
+                                                            ✕
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="pt-3 flex gap-3">

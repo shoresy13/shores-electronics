@@ -16,7 +16,10 @@ const storage = new CloudinaryStorage({
     params: {
         folder: "shores_electronics_images",
         allowed_formats: ["jpg", "jpeg", "png", "webp"],
-        public_id: (req, file) => `${Date.now()}-${file.originalname.split(".")[0]}`
+        public_id: (req, file) => `${Date.now()}-${file.originalname.split(".")[0]}`,
+        transformation: [
+            { quality: "auto:best", fetch_format: "auto" }
+        ]
     }
 });
 

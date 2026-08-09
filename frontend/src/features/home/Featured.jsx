@@ -3,6 +3,14 @@ import { Link } from "react-router";
 import { Card } from "../../components/Card";
 import API from "../../../utils/axios.js";
 
+const getHDImageUrl = (url) => {
+    if (!url || typeof url !== "string") return url;
+    if (url.includes("cloudinary.com") && !url.includes("q_auto:best")) {
+        return url.replace("/upload/", "/upload/q_auto:best,f_auto/");
+    }
+    return url;
+};
+
 export const Featured = () => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -68,14 +76,13 @@ export const Featured = () => {
                                 padding="p-4 sm:p-5"
                                 className="bg-white text-[#1925aa] border border-[#1925aa]/80 hover:border-[#1925aa] flex flex-col justify-between w-full group hover:-translate-y-0.5 hover:bg-[#1925aa]/2 transition-all duration-200"
                             >
-                                <div className="flex flex-col sm:flex-row gap-4 h-full">
-                                    {/* Left Side */}
-                                    <div className="w-full sm:w-2/5 aspect-square bg-[#1925aa]/5 border border-[#1925aa] overflow-hidden flex items-center justify-center relative shrink-0">
+                                <div className="flex flex-col sm:flex-row gap-4 h-full items-center sm:items-stretch">
+                                    <div className="w-full sm:w-2/5 aspect-square bg-[#1925aa]/5 border border-[#1925aa] overflow-hidden flex items-center justify-center relative shrink-0 p-1">
                                         {product.images && product.images.length > 0 ? (
                                             <img
-                                                src={product.images[0]}
+                                                src={getHDImageUrl(product.images[0])}
                                                 alt={product.name}
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-contain m-auto"
                                             />
                                         ) : (
                                             <span className="text-[10px] font-mono uppercase opacity-50">
@@ -85,7 +92,7 @@ export const Featured = () => {
                                     </div>
 
                                     {/* Right Side */}
-                                    <div className="flex flex-col justify-between flex-1 min-w-0">
+                                    <div className="flex flex-col justify-between flex-1 min-w-0 w-full">
                                         <div>
                                             {/* Title & Price */}
                                             <div className="flex justify-between items-baseline mb-2 pb-1.5 border-b border-[#1925aa]/20 gap-2">
