@@ -72,6 +72,8 @@ export const ProductDetail = () => {
         );
     }
 
+    const validSpecs = product.specs ? Object.entries(product.specs).filter(([_, val]) => Boolean(val)) : [];
+
     return (
         <div className="text-[#1925aa] font-mono">
             <div>
@@ -144,20 +146,26 @@ export const ProductDetail = () => {
                                     </div>
 
                                     {/* Hardware Specs */}
-                                    {product.specs && (
+                                    {validSpecs.length > 0 && (
                                         <div className="border-t border-[#1925aa]/20 pt-3 mb-4">
                                             <h2 className="font-['Zalando_Sans_Expanded'] text-xs font-bold uppercase tracking-wider mb-2">
                                                 HARDWARE SPECS
                                             </h2>
                                             <div className="bg-[#1925aa]/5 p-2.5 border border-[#1925aa]/20 text-[11px] sm:text-xs font-mono uppercase space-y-1">
-                                                {Object.entries(product.specs).map(([key, val]) => (
-                                                    val ? (
-                                                        <div key={key} className="flex justify-between border-b border-[#1925aa]/10 pb-0.5 gap-2">
+                                                {validSpecs.map(([key, val], idx) => {
+                                                    const isLast = idx === validSpecs.length - 1;
+                                                    return (
+                                                        <div
+                                                            key={key}
+                                                            className={`flex justify-between pb-0.5 gap-2 ${
+                                                                !isLast ? "border-b border-[#1925aa]/10" : ""
+                                                            }`}
+                                                        >
                                                             <span className="opacity-60 shrink-0">{key}:</span>
                                                             <span className="font-bold truncate text-right">{val}</span>
                                                         </div>
-                                                    ) : null
-                                                ))}
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     )}
