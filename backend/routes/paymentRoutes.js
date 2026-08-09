@@ -19,10 +19,64 @@ router.post('/create-checkout-session', async (req, res) => {
             return res.status(400).json({ message: "SYSTEM IS OUT OF STOCK" });
         }
 
-        // Create Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
+
+            shipping_address_collection: {
+                allowed_countries: ['GB'],
+            },
+
+            phone_number_collection: {
+                enabled: true,
+            },
+
+            // Delivery and Collection Options
+            shipping_options: [
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: {
+                            amount: 2000,
+                            currency: 'gbp',
+                        },
+                        display_name: 'Standard Insured Shipping (UK)',
+                        delivery_estimate: {
+                            minimum: { unit: 'business_day', value: 1 },
+                            maximum: { unit: 'business_day', value: 3 },
+                        },
+                    },
+                },
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: {
+                            amount: 1000,
+                            currency: 'gbp',
+                        },
+                        display_name: 'Local Delivery (Newcastle Upon Tyne)',
+                        delivery_estimate: {
+                            minimum: { unit: 'business_day', value: 1 },
+                            maximum: { unit: 'business_day', value: 2 },
+                        },
+                    },
+                },
+                {
+                    shipping_rate_data: {
+                        type: 'fixed_amount',
+                        fixed_amount: {
+                            amount: 0,
+                            currency: 'gbp',
+                        },
+                        display_name: 'Free Local Collection (Newcastle Upon Tyne)',
+                        delivery_estimate: {
+                            minimum: { unit: 'business_day', value: 1 },
+                            maximum: { unit: 'business_day', value: 2 },
+                        },
+                    },
+                },
+            ],
+
             line_items: [
                 {
                     price_data: {
