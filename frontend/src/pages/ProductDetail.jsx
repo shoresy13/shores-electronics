@@ -40,7 +40,7 @@ export const ProductDetail = () => {
     if (loading) {
         return (
             <div className="text-[#1925aa] font-mono">
-                <div className="w-full max-w-[1600px] mx-auto px-6 min-h-[calc(100vh-5rem)] flex items-center justify-center">
+                <div className="w-full max-w-[1600px] mx-auto px-6 py-10 flex items-center justify-center">
                     <div className="text-xs sm:text-sm uppercase font-bold animate-pulse tracking-widest">
                         FETCHING SYSTEM SPECIFICATIONS...
                     </div>
@@ -52,7 +52,7 @@ export const ProductDetail = () => {
     if (error || !product) {
         return (
             <div className="text-[#1925aa] font-mono">
-                <div className="w-full max-w-[1600px] mx-auto px-6 min-h-[calc(100vh-5rem)] flex items-center justify-center">
+                <div className="w-full max-w-[1600px] mx-auto px-6 py-10 flex items-center justify-center">
                     <div className="w-full max-w-xl border border-dashed border-[#1925aa]/40 bg-[#1925aa]/2 p-6 text-center">
                         <span className="text-xs sm:text-sm font-bold tracking-widest uppercase">
                             [ 404 - INVALID PRODUCT ID ]
@@ -73,88 +73,87 @@ export const ProductDetail = () => {
     }
 
     return (
-        <div className="text-[#1925aa] font-mono overflow-x-hidden">
-            <section className="w-full max-w-[1600px] mx-auto px-6 py-4 lg:py-6 lg:h-[calc(100vh-5rem)] flex flex-col justify-between">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch flex-1 min-h-0">
+        <div className="text-[#1925aa] font-mono">
+            <div>
+                <section className="w-full max-w-[1600px] mx-auto px-6 py-6 lg:py-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-6 gap-x-8 lg:gap-x-10 2xl:gap-x-12 items-stretch">
 
-                    {/* Left Column */}
-                    <div className="lg:col-span-6 flex flex-col min-h-0">
-                        <Card padding="p-3 flex-1 flex flex-col justify-between min-h-0">
-                            <div className="w-full flex-1 bg-[#1925aa]/5 border-2 border-[#1925aa] overflow-hidden flex items-center justify-center relative min-h-0 p-1">
-                                {product.images && product.images.length > 0 ? (
-                                    <img
-                                        src={getHDImageUrl(product.images[selectedImage])}
-                                        alt={product.name}
-                                        className="w-full h-full object-contain m-auto"
-                                    />
-                                ) : (
-                                    <span className="text-xs sm:text-sm uppercase opacity-50">
-                                        NO MEDIA PREVIEW
-                                    </span>
-                                )}
-                            </div>
-
-                            {/* Image Thumbnails */}
-                            {product.images && product.images.length > 1 && (
-                                <div className="flex gap-2.5 justify-center items-center overflow-x-auto shrink-0 pt-2.5 w-full">
-                                    {product.images.map((img, idx) => (
-                                        <button
-                                            key={idx}
-                                            onClick={() => setSelectedImage(idx)}
-                                            className={`w-14 h-14 border-2 shrink-0 bg-[#1925aa]/5 overflow-hidden flex items-center justify-center transition-all ${
-                                                selectedImage === idx
-                                                    ? "border-[#1925aa] ring-1 ring-[#1925aa]"
-                                                    : "border-[#1925aa]/30 opacity-60 hover:opacity-100"
-                                            }`}
-                                        >
-                                            <img
-                                                src={getHDImageUrl(img)}
-                                                alt={`Thumb ${idx}`}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        </button>
-                                    ))}
+                        {/* Left Column */}
+                        <div className="lg:col-span-6 flex flex-col min-h-0">
+                            <Card padding="p-4" className="bg-white text-[#1925aa] border border-[#1925aa] flex flex-col justify-between h-full">
+                                <div className="w-full h-72 sm:h-96 lg:h-160 bg-[#1925aa]/5 border border-[#1925aa] overflow-hidden flex items-center justify-center p-2 relative">
+                                    {product.images && product.images.length > 0 ? (
+                                        <img
+                                            src={getHDImageUrl(product.images[selectedImage])}
+                                            alt={product.name}
+                                            className="w-full h-full object-contain m-auto"
+                                        />
+                                    ) : (
+                                        <span className="text-xs uppercase font-mono opacity-50">
+                                            NO MEDIA PREVIEW
+                                        </span>
+                                    )}
                                 </div>
-                            )}
-                        </Card>
-                    </div>
 
-                    {/* Right Column */}
-                    <div className="lg:col-span-6 flex flex-col min-h-0">
-                        <Card padding="p-5 flex-1 flex flex-col justify-between min-h-0">
-                            <div className="flex flex-col justify-between flex-1 min-h-0 pr-1">
+                                {product.images && product.images.length > 1 && (
+                                    <div className="flex gap-2.5 overflow-x-auto pt-3 shrink-0 justify-center">
+                                        {product.images.map((img, idx) => (
+                                            <button
+                                                key={idx}
+                                                onClick={() => setSelectedImage(idx)}
+                                                className={`w-12 h-12 border shrink-0 bg-[#1925aa]/5 overflow-hidden flex items-center justify-center transition-all ${
+                                                    selectedImage === idx
+                                                        ? "border-[#1925aa] ring-2 ring-[#1925aa]"
+                                                        : "border-[#1925aa]/30 opacity-60 hover:opacity-100"
+                                                }`}
+                                            >
+                                                <img
+                                                    src={getHDImageUrl(img)}
+                                                    alt={`Thumb ${idx}`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </Card>
+                        </div>
+
+                        {/* Right Side */}
+                        <div className="lg:col-span-6 flex flex-col min-h-0">
+                            <Card padding="p-4 sm:p-5" className="bg-white text-[#1925aa] border border-[#1925aa] flex flex-col justify-between h-full">
                                 <div>
                                     {/* Title and Price */}
-                                    <div className="border-b-2 border-[#1925aa] pb-2.5 mb-3 flex justify-between items-baseline gap-4 shrink-0">
-                                        <h1 className="font-['Zalando_Sans_Expanded'] text-lg sm:text-xl lg:text-2xl font-bold uppercase tracking-wider truncate">
+                                    <div className="border-b-2 border-[#1925aa] pb-2 mb-3 flex justify-between items-baseline gap-4">
+                                        <h1 className="font-['Zalando_Sans_Expanded'] text-base sm:text-lg lg:text-xl font-bold uppercase tracking-wider truncate">
                                             {product.name}
                                         </h1>
-                                        <span className="font-['Zalando_Sans_Expanded'] text-lg sm:text-xl lg:text-2xl font-bold shrink-0">
+                                        <span className="font-mono text-base sm:text-lg lg:text-xl font-bold shrink-0">
                                             £{product.price?.toFixed(2)}
                                         </span>
                                     </div>
 
                                     {/* Description */}
-                                    <div className="mb-3">
-                                        <h4 className="font-['Zalando_Sans_Expanded'] text-xs sm:text-sm font-bold uppercase tracking-wider mb-1">
+                                    <div className="mb-4">
+                                        <h2 className="font-['Zalando_Sans_Expanded'] text-xs font-bold uppercase tracking-wider mb-1">
                                             DESCRIPTION
-                                        </h4>
-                                        <p className="font-mono text-xs sm:text-sm uppercase tracking-wide text-[#1925aa]/90 leading-relaxed whitespace-pre-line">
+                                        </h2>
+                                        <p className="font-mono text-xs uppercase tracking-wide text-[#1925aa]/90 leading-relaxed whitespace-pre-line">
                                             {product.description}
                                         </p>
                                     </div>
 
                                     {/* Hardware Specs */}
                                     {product.specs && (
-                                        <div className="border-t border-[#1925aa] pt-2 mb-3">
-                                            <h4 className="font-['Zalando_Sans_Expanded'] text-xs sm:text-sm font-bold uppercase tracking-wider mb-1.5">
+                                        <div className="border-t border-[#1925aa]/20 pt-3 mb-4">
+                                            <h2 className="font-['Zalando_Sans_Expanded'] text-xs font-bold uppercase tracking-wider mb-2">
                                                 HARDWARE SPECS
-                                            </h4>
-                                            <div className="bg-[#1925aa]/5 p-2.5 border border-[#1925aa] text-[11px] uppercase space-y-1">
+                                            </h2>
+                                            <div className="bg-[#1925aa]/5 p-2.5 border border-[#1925aa]/20 text-[11px] sm:text-xs font-mono uppercase space-y-1">
                                                 {Object.entries(product.specs).map(([key, val]) => (
                                                     val ? (
-                                                        <div key={key} className="flex justify-between border-b border-[#1925aa]/20 pb-0.5 gap-2">
-                                                            <span className="font-bold opacity-70 shrink-0">{key}:</span>
+                                                        <div key={key} className="flex justify-between border-b border-[#1925aa]/10 pb-0.5 gap-2">
+                                                            <span className="opacity-60 shrink-0">{key}:</span>
                                                             <span className="font-bold truncate text-right">{val}</span>
                                                         </div>
                                                     ) : null
@@ -165,35 +164,37 @@ export const ProductDetail = () => {
 
                                     {/* Gaming Benchmarks */}
                                     {product.benchmarks && product.benchmarks.length > 0 && (
-                                        <div className="border-t border-[#1925aa] pt-2 mb-3">
-                                            <h4 className="font-['Zalando_Sans_Expanded'] text-xs sm:text-sm font-bold uppercase tracking-wider mb-1.5 flex items-center justify-between">
-                                                <span>PERFORMANCE BENCHMARKS</span>
-                                            </h4>
+                                        <div className="border-t border-[#1925aa]/20 pt-3 mb-4">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <h2 className="font-['Zalando_Sans_Expanded'] text-xs font-bold uppercase tracking-wider">
+                                                    PERFORMANCE BENCHMARKS
+                                                </h2>
+                                            </div>
 
-                                            <div className="bg-[#1925aa]/5 border border-[#1925aa] overflow-x-auto">
-                                                <table className="w-full text-left text-xs sm:text-sm uppercase font-mono border-collapse">
+                                            <div className="bg-[#1925aa]/5 border border-[#1925aa]/20 overflow-x-auto">
+                                                <table className="w-full text-left text-xs uppercase font-mono border-collapse">
                                                     <thead>
-                                                    <tr className="border-b border-[#1925aa]/40 bg-[#1925aa]/10 text-xs opacity-80">
-                                                        <th className="py-1.5 px-3">Title</th>
+                                                    <tr className="border-b border-[#1925aa]/20 bg-[#1925aa]/10 text-[10px] opacity-80">
+                                                        <th className="py-1.5 px-2.5">Title</th>
                                                         <th className="py-1.5 px-2">Preset</th>
                                                         <th className="py-1.5 px-2">Resolution</th>
-                                                        <th className="py-1.5 px-3 text-right">Avg FPS</th>
+                                                        <th className="py-1.5 px-2.5 text-right">Avg FPS</th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody className="divide-y divide-[#1925aa]/20">
+                                                    <tbody className="divide-y divide-[#1925aa]/10">
                                                     {product.benchmarks.map((bm, index) => (
                                                         <tr key={index} className="hover:bg-[#1925aa]/5">
-                                                            <td className="py-1 px-3 font-bold truncate max-w-32.5">
+                                                            <td className="py-1 px-2.5 font-bold truncate max-w-27.5">
                                                                 {bm.game}
                                                             </td>
-                                                            <td className="py-1 px-2 opacity-80 text-xs">
+                                                            <td className="py-1 px-2 opacity-80 text-[10px] sm:text-[11px]">
                                                                 {bm.settings}
                                                             </td>
-                                                            <td className="py-1 px-2 opacity-80 text-xs">
+                                                            <td className="py-1 px-2 opacity-80 text-[10px] sm:text-[11px]">
                                                                 {bm.resolution}
                                                             </td>
-                                                            <td className="py-1 px-3 text-right font-bold text-[#1925aa]">
-                                                                    <span className="bg-[#1925aa] text-white px-2 py-0.5 text-xs inline-block font-mono">
+                                                            <td className="py-1 px-2.5 text-right font-bold text-[#1925aa]">
+                                                                    <span className="bg-[#1925aa] text-white px-1.5 py-0.5 text-[10px] inline-block font-mono">
                                                                         {bm.fps} FPS
                                                                     </span>
                                                             </td>
@@ -207,26 +208,27 @@ export const ProductDetail = () => {
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="pt-1 space-y-1.5 shrink-0 mt-2">
+                                <div className="pt-3 space-y-1.5 shrink-0">
                                     <Link
                                         to={`/contact?subject=Inquiry regarding ${encodeURIComponent(product.name)}`}
-                                        className="block w-full text-center bg-[#1925aa] text-white font-mono text-xs sm:text-sm font-bold py-3 uppercase tracking-widest hover:bg-transparent hover:text-[#1925aa] border border-[#1925aa] transition-all"
+                                        className="block w-full text-center bg-[#1925aa] text-white font-mono text-xs font-bold py-2.5 uppercase tracking-widest hover:bg-transparent hover:text-[#1925aa] border border-[#1925aa] transition-all"
                                     >
-                                        INQUIRE ABOUT THIS BUILD &rarr;
+                                        BUY NOW
                                     </Link>
                                     <Link
                                         to="/products"
                                         className="block w-full text-center bg-transparent text-[#1925aa] font-mono text-xs font-bold py-0.5 uppercase tracking-wider hover:underline"
                                     >
-                                        &larr; RETURN TO CATALOG
+                                        RETURN TO PRODUCTS
                                     </Link>
                                 </div>
-                            </div>
-                        </Card>
-                    </div>
+                            </Card>
+                        </div>
 
-                </div>
-            </section>
+                    </div>
+                </section>
+            </div>
+
         </div>
     );
 };
