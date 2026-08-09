@@ -34,7 +34,7 @@ export const getProductById = async (req, res) => {
 // @access  Private
 export const createProduct = async (req, res) => {
     try {
-        const { name, price, description, images, isFeatured, specs, countInStock } = req.body;
+        const { name, price, description, images, isFeatured, specs, benchmarks, countInStock } = req.body;
 
         const product = new Product({
             name,
@@ -43,6 +43,7 @@ export const createProduct = async (req, res) => {
             images,
             isFeatured: Boolean(isFeatured),
             specs,
+            benchmarks: Array.isArray(benchmarks) ? benchmarks : [],
             countInStock
         });
 
@@ -58,7 +59,7 @@ export const createProduct = async (req, res) => {
 // @access  Private
 export const updateProduct = async (req, res) => {
     try {
-        const { name, price, description, images, isFeatured, specs, countInStock } = req.body;
+        const { name, price, description, images, isFeatured, specs, benchmarks, countInStock } = req.body;
         const product = await Product.findById(req.params.id);
 
         if (product) {
@@ -68,6 +69,7 @@ export const updateProduct = async (req, res) => {
             product.images = images || product.images;
             product.isFeatured = isFeatured !== undefined ? Boolean(isFeatured) : product.isFeatured;
             product.specs = specs || product.specs;
+            product.benchmarks = benchmarks || product.benchmarks;
             product.countInStock = countInStock ?? product.countInStock;
 
             const updatedProduct = await product.save();

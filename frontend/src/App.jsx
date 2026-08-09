@@ -10,6 +10,8 @@ import { Services } from "./pages/Services.jsx";
 import { Products } from "./pages/Products.jsx";
 import { Contact } from "./pages/Contact.jsx";
 
+import { ProductDetail } from "./pages/ProductDetail";
+
 import { Login } from "./pages/Login.jsx";
 import { AdminDashboard } from "./pages/AdminDashboard.jsx";
 
@@ -50,9 +52,9 @@ export default function App() {
                 <Route path="products" element={<Products />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="login" element={<Login />} />
+                <Route path="/products/:id" element={<ProductDetail />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-of-service" element={<TermsOfService />} />
-
                 <Route element={<ProtectedAdminRoute />}>
                     <Route path="admin-dashboard" element={<AdminDashboard />} />
                 </Route>
