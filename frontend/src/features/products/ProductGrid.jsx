@@ -27,13 +27,13 @@ export const ProductGrid = () => {
             <div className="max-w-[1600px] mx-auto px-6">
 
                 {/* Header */}
-                <div className="mb-6 border-b-2 border-[#1925aa] pb-3 flex justify-between items-end gap-3">
-                    <div>
-                        <h2 className="font-['Zalando_Sans_Expanded'] text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider">
+                <div className="mb-6 border-b-2 border-[#1925aa] pb-3 flex justify-between items-baseline gap-2">
+                    <div className="min-w-0">
+                        <h2 className="font-['Zalando_Sans_Expanded'] text-xs sm:text-base md:text-xl font-bold uppercase tracking-wider truncate">
                             PRODUCTS INVENTORY
                         </h2>
                     </div>
-                    <span className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#1925aa]/70">
+                    <span className="text-[9px] sm:text-xs font-mono font-bold uppercase tracking-wider text-[#1925aa]/70 shrink-0 whitespace-nowrap">
                         [{products.length} SYSTEMS AVAILABLE]
                     </span>
                 </div>
