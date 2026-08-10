@@ -14,8 +14,8 @@ export default function Footer() {
 
     const navRoutes = [
         { label: "Home", href: "/" },
-        { label: "Services", href: "/services" },
         { label: "Products", href: "/products" },
+        { label: "Services", href: "/services" },
         { label: "Contact", href: "/contact" },
     ];
 

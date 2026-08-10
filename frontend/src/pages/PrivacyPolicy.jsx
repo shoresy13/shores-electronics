@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function PrivacyPolicy() {
     const lastUpdated = "July 31, 2026";
     const contactEmail = "contact@shoreselectronics.co.uk";
     const siteUrl = "https://shoreselectronics.co.uk/";
     const dsarUrl = "https://app.termly.io/dsar/fb423e11-9c30-4913-9d54-cc5267d8e8a6";
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <main className="min-h-screen bg-[#1925aa] text-white font-mono text-xs md:text-sm uppercase tracking-wider py-16 px-6 select-none">
