@@ -82,7 +82,7 @@ export const OrderConfirmation = () => {
                     </p>
                 </div>
 
-                {/* Order Summary & Shipping Details */}
+                {/* Order Summary & Delivery Details */}
                 <Card padding="p-6" className="bg-white border border-[#1925aa] text-[#1925aa] space-y-6">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b border-[#1925aa]/20 gap-2">
                         <div>
@@ -99,11 +99,20 @@ export const OrderConfirmation = () => {
                         </div>
                     </div>
 
-                    {/* Customer & Delivery / Collection Details */}
-                    <div className="pb-4 border-b border-[#1925aa]/20 space-y-2">
+                    {/* Customer & Shipping Type Details */}
+                    <div className="pb-4 border-b border-[#1925aa]/20 space-y-3">
                         <h2 className="font-['Zalando_Sans_Expanded'] text-xs font-bold uppercase tracking-wider">
                             FULFILLMENT & RECIPIENT
                         </h2>
+
+                        {/* Selected Shipping Option Badge */}
+                        <div className="bg-[#1925aa]/5 border border-[#1925aa]/30 p-3 text-xs uppercase space-y-1">
+                            <span className="text-[10px] opacity-60 block font-bold">SELECTED SHIPPING METHOD:</span>
+                            <span className="font-bold block text-xs">
+                                {orderDetails?.shippingMethodName || (orderDetails?.amountShipping === 0 ? "FREE LOCAL COLLECTION" : "STANDARD SHIPPING")}
+                            </span>
+                        </div>
+
                         <div className="text-xs uppercase space-y-1 text-[#1925aa]/90">
                             {orderDetails?.customerName ? (
                                 <p className="font-bold">{orderDetails.customerName}</p>
@@ -129,9 +138,7 @@ export const OrderConfirmation = () => {
                                 </div>
                             ) : (
                                 <p className="text-[10px] opacity-60 pt-1">
-                                    {orderDetails?.amountShipping === 0
-                                        ? "// LOCAL COLLECTION (NEWCASTLE UPON TYNE)"
-                                        : "// NO PHYSICAL SHIPPING ADDRESS RECORDED"}
+                                    // LOCAL COLLECTION POINT: NEWCASTLE UPON TYNE. WE WILL EMAIL YOU PICKUP INSTRUCTIONS.
                                 </p>
                             )}
                         </div>

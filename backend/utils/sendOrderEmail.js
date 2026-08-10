@@ -6,16 +6,19 @@ export const sendOrderConfirmationEmail = async ({
                                                      orderId,
                                                      customerEmail,
                                                      customerName,
+                                                     shippingMethodName,
                                                      shippingAddress,
                                                      amountSubtotal,
                                                      amountShipping,
                                                      amountTotal,
                                                      items
                                                  }) => {
-    if (!customerEmail) {
-        throw new Error("CUSTOMER EMAIL IS REQUIRED FOR ORDER CONFIRMATION.");
+    if (!customerEmail || typeof customerEmail !== 'string') {
+        console.error("Order confirmation email skipped: Invalid customerEmail provided.");
+        return;
     }
 
+    const adminRecipient = process.env.EMAIL_USER || "contact@shoreselectronics.co.uk";
     const fontStack = "Arial, Helvetica, sans-serif";
 
     const itemsHtml = items.map(item => `
@@ -31,16 +34,28 @@ export const sendOrderConfirmationEmail = async ({
         </tr>
     `).join('');
 
-    // Format address
+    const fulfillmentTypeHtml = `
+        <div style="background-color: #1925aa10; border: 1px solid #1925aa; padding: 10px 12px; margin-bottom: 12px;">
+            <p style="margin: 0; font-size: 11px; font-weight: bold; color: #1925aa; text-transform: uppercase; letter-spacing: 1px;">
+                SELECTED FULFILLMENT METHOD:
+            </p>
+            <p style="margin: 4px 0 0 0; font-size: 13px; font-weight: bold; text-transform: uppercase; color: #000000;">
+                ${shippingMethodName || 'Standard Delivery'}
+            </p>
+        </div>
+    `;
+
     const addressHtml = shippingAddress?.line1 ? `
+        ${fulfillmentTypeHtml}
         <p style="margin: 0; font-size: 13px; color: #222222; text-transform: uppercase;">${shippingAddress.line1}</p>
         ${shippingAddress.line2 ? `<p style="margin: 0; font-size: 13px; color: #222222; text-transform: uppercase;">${shippingAddress.line2}</p>` : ''}
         <p style="margin: 0; font-size: 13px; color: #222222; text-transform: uppercase;">
             ${[shippingAddress.city, shippingAddress.postal_code, shippingAddress.country].filter(Boolean).join(', ')}
         </p>
     ` : `
+        ${fulfillmentTypeHtml}
         <p style="margin: 0; font-size: 12px; color: #666666; text-transform: uppercase;">
-            ${amountShipping === 0 ? '// LOCAL COLLECTION (NEWCASTLE UPON TYNE)' : '// NO PHYSICAL SHIPPING ADDRESS RECORDED'}
+            // LOCAL COLLECTION POINT: NEWCASTLE UPON TYNE. WE WILL CONTACT YOU WITH PICKUP TIMES.
         </p>
     `;
 
@@ -48,7 +63,7 @@ export const sendOrderConfirmationEmail = async ({
         // ADMIN EMAIL
         const adminEmail = resend.emails.send({
             from: "Shores Electronics <contact@shoreselectronics.co.uk>",
-            to: [process.env.EMAIL_USER],
+            to: [adminRecipient],
             replyTo: customerEmail,
             subject: `[NEW ORDER] Ref #${orderId} - £${amountTotal.toFixed(2)}`,
             html: `
@@ -70,7 +85,7 @@ export const sendOrderConfirmationEmail = async ({
               </div>
 
               <div style="border: 2px solid #000000; padding: 16px; margin-bottom: 20px;">
-                <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #1925aa; letter-spacing: 1px;">FULFILLMENT DESTINATION</p>
+                <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #1925aa; letter-spacing: 1px;">FULFILLMENT & SHIPPING METHOD</p>
                 ${addressHtml}
               </div>
 
@@ -115,9 +130,9 @@ export const sendOrderConfirmationEmail = async ({
                 </p>
               </div>
 
-              <!-- Shipping Destination -->
+              <!-- Shipping Destination & Method -->
               <div style="border: 2px solid #000000; padding: 16px; margin-bottom: 20px;">
-                <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #1925aa; letter-spacing: 1px;">FULFILLMENT / SHIP TO:</p>
+                <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #1925aa; letter-spacing: 1px;">FULFILLMENT & SHIPPING METHOD:</p>
                 ${addressHtml}
               </div>
 

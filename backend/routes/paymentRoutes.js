@@ -32,7 +32,6 @@ router.post('/create-checkout-session', async (req, res) => {
                 enabled: true,
             },
 
-            // Delivery and Collection Options
             shipping_options: [
                 {
                     shipping_rate_data: {
@@ -106,7 +105,7 @@ router.post('/create-checkout-session', async (req, res) => {
     }
 });
 
-// Fetch Order Confirmation Details
+// Fetch Order Confirmation Details by Session ID
 router.get('/session/:sessionId', async (req, res) => {
     try {
         const { sessionId } = req.params;
@@ -116,7 +115,7 @@ router.get('/session/:sessionId', async (req, res) => {
         }
 
         const session = await stripe.checkout.sessions.retrieve(sessionId, {
-            expand: ['line_items', 'line_items.data.price', 'customer_details'],
+            expand: ['line_items', 'line_items.data.price', 'customer_details', 'shipping_cost.shipping_rate'],
         });
 
         if (!session) {
@@ -125,10 +124,14 @@ router.get('/session/:sessionId', async (req, res) => {
 
         const shipping = session.shipping_details || session.customer_details;
 
+        const shippingMethodName = session.shipping_cost?.shipping_rate?.display_name ||
+            (session.shipping_cost?.amount_total === 0 ? 'Free Local Collection (Newcastle Upon Tyne)' : 'Standard Delivery');
+
         const orderData = {
             orderId: session.id.slice(-10).toUpperCase(),
             customerName: session.customer_details?.name || session.shipping_details?.name || null,
             customerEmail: session.customer_details?.email || session.customer_email || null,
+            shippingMethodName: shippingMethodName,
             shippingAddress: shipping?.address ? {
                 line1: shipping.address.line1,
                 line2: shipping.address.line2,
@@ -147,7 +150,7 @@ router.get('/session/:sessionId', async (req, res) => {
             })) || [],
         };
 
-        // Send confirmation emails
+        // Send emails
         if (session.payment_status === 'paid' && orderData.customerEmail) {
             sendOrderConfirmationEmail(orderData).catch((err) =>
                 console.error("Failed to send order email:", err.message)
