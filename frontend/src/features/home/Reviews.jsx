@@ -33,14 +33,18 @@ export const Reviews = () => {
                 {/* Header */}
                 <div className="mb-8 border-b-2 border-white pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
                     <div>
-                        {/* Section Title - Zalando Sans Expanded */}
                         <h2 className="font-['Zalando_Sans_Expanded'] text-lg sm:text-xl md:text-2xlfont-bold uppercase tracking-wider">
                             WHAT CUSTOMERS SAY
                         </h2>
                     </div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-white/80">
-                        5.0 STAR RATING AVERAGE
-                    </span>
+                    <a
+                        href="https://forms.gle/UUThF2fejqo1FSW19"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-mono uppercase tracking-widest text-white/80 hover:text-white underline transition-colors"
+                    >
+                        LEAVE A REVIEW
+                    </a>
                 </div>
 
                 {/* Reviews Grid */}
@@ -71,9 +75,6 @@ export const Reviews = () => {
                             <div className="pt-2 border-t border-[#1925aa] flex items-center justify-between">
                                 <span className="text-xs font-mono font-bold tracking-widest uppercase">
                                     {review.name}
-                                </span>
-                                <span className="text-[10px] font-mono tracking-widest uppercase text-[#1925aa]/60">
-                                    VERIFIED BUYER
                                 </span>
                             </div>
                         </Card>
