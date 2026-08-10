@@ -1,2 +1,2 @@
-# shores-electronics
-Website for my PC build and repair business
+# Shores Electronics
+Full-stack MERN application for a PC build and repair business.
