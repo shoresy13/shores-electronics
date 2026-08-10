@@ -33,22 +33,22 @@ export const Hero = () => {
                     {/* Services CTA and Products CTA */}
                     <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
                         <CtaCard
-                            title="Custom Builds & Repairs"
-                            description="Custom pcs tailored to any budget, free quotes plus free initial system diagnostics on all repair jobs."
-                            imageSrc={repairImg}
-                            imageLabel="[ SERVICES IMAGE PLACEHOLDER ]"
-                            buttonText="Explore Services"
-                            buttonLink="/services"
-                            className="flex-1"
-                        />
-
-                        <CtaCard
                             title="Pre-Built & Stock Systems"
                             description="Browse ready to order systems configured and tested by me. No bloatware, proffesionally built and sold at the price of parts."
                             imageSrc={buildImg}
                             imageLabel="[ PRODUCTS IMAGE PLACEHOLDER ]"
                             buttonText="View Current Systems"
                             buttonLink="/products"
+                            className="flex-1"
+                        />
+
+                        <CtaCard
+                            title="Custom Builds & Repairs"
+                            description="Custom pcs tailored to any budget, free quotes plus free initial system diagnostics on all repair jobs."
+                            imageSrc={repairImg}
+                            imageLabel="[ SERVICES IMAGE PLACEHOLDER ]"
+                            buttonText="Explore Services"
+                            buttonLink="/services"
                             className="flex-1"
                         />
                     </div>
