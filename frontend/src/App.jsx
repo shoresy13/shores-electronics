@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, Outlet, Navigate } from "react-router";
+import React, { useEffect } from "react";
+import { Routes, Route, Outlet, Navigate, useLocation } from "react-router";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
@@ -18,6 +18,16 @@ import { AdminDashboard } from "./pages/AdminDashboard.jsx";
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from "./pages/TermsOfService";
 
+function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+}
+
 function ProtectedAdminRoute() {
     const userInfo = localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo"))
@@ -33,6 +43,7 @@ function ProtectedAdminRoute() {
 export function Layout() {
     return (
         <div className="min-h-screen bg-white text-black font-mono selection:bg-[#1925aa] selection:text-white flex flex-col">
+            <ScrollToTop />
             <NoticeModal />
             <Navbar />
             <main className="w-full grow min-h-[calc(100vh-80px)]">
