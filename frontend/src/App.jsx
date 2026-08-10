@@ -11,6 +11,7 @@ import { Products } from "./pages/Products.jsx";
 import { Contact } from "./pages/Contact.jsx";
 
 import { ProductDetail } from "./pages/ProductDetail";
+import { OrderConfirmation } from "./pages/OrderConfirmation.jsx";
 
 import { Login } from "./pages/Login.jsx";
 import { AdminDashboard } from "./pages/AdminDashboard.jsx";
@@ -64,6 +65,7 @@ export default function App() {
                 <Route path="contact" element={<Contact />} />
                 <Route path="login" element={<Login />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
+                <Route path="/order-confirmation" element={<OrderConfirmation />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-of-service" element={<TermsOfService />} />
                 <Route element={<ProtectedAdminRoute />}>

@@ -38,13 +38,15 @@ export const ContactForm = () => {
 
                 {/* Status Banners */}
                 {status.error && (
-                    <div className="p-3 border border-[#1925aa] bg-[#1925aa]/10 text-[#1925aa] font-bold text-xs uppercase tracking-wider">
-                        {status.error}
+                    <div className="p-3 border border-red-600 bg-red-600/5 text-red-600 font-bold text-xs uppercase tracking-wider flex items-center gap-2.5">
+                        <span className="w-2.5 h-2.5 bg-red-600 rounded-full inline-block shrink-0 animate-pulse" />
+                        <span>{status.error}</span>
                     </div>
                 )}
                 {status.success && (
-                    <div className="p-3 border border-[#1925aa] bg-[#1925aa]/10 text-[#1925aa] font-bold text-xs uppercase tracking-wider">
-                        {status.success}
+                    <div className="p-3 border border-emerald-600 bg-emerald-600/5 text-emerald-700 font-bold text-xs uppercase tracking-wider flex items-center gap-2.5">
+                        <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block shrink-0 animate-pulse" />
+                        <span>{status.success}</span>
                     </div>
                 )}
 
