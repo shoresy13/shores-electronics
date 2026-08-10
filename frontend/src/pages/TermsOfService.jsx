@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 export default function TermsOfService() {
     const lastUpdated = "July 31, 2026";
     const contactEmail = "contact@shoreselectronics.co.uk";
     const siteUrl = "https://shoreselectronics.co.uk/";
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <main className="min-h-screen bg-[#1925aa] text-white font-mono text-xs md:text-sm uppercase tracking-wider py-16 px-6 select-none">
