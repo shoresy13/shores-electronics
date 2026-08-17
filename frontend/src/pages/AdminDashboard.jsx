@@ -18,6 +18,7 @@ const initialFormState = {
     name: "",
     price: "",
     countInStock: 1,
+    ebayUrl: "",
     description: "",
     images: "",
     isFeatured: false,
@@ -134,7 +135,8 @@ export const AdminDashboard = () => {
         setFormData({
             name: product.name || "",
             price: product.price || "",
-            countInStock: product.countInStock ?? 1,
+            countInStock: product.countInStock ?? 0,
+            ebayUrl: product.ebayUrl || "",
             description: product.description || "",
             images: Array.isArray(product.images) ? product.images.join(", ") : "",
             isFeatured: Boolean(product.isFeatured),
@@ -175,6 +177,7 @@ export const AdminDashboard = () => {
             ...formData,
             price: Number(formData.price),
             countInStock: Number(formData.countInStock),
+            ebayUrl: formData.ebayUrl.trim(),
             isFeatured: Boolean(formData.isFeatured),
             images: formData.images.split(",").map((s) => s.trim()).filter(Boolean),
             benchmarks: cleanBenchmarks
@@ -268,11 +271,22 @@ export const AdminDashboard = () => {
                                         </div>
                                     </div>
 
+                                    {/* ebay URL */}
+                                    <div>
+                                        <label className="block font-bold mb-1 tracking-wider">eBay Listing URL (Optional)</label>
+                                        <input
+                                            type="url"
+                                            name="ebayUrl"
+                                            value={formData.ebayUrl}
+                                            onChange={handleChange}
+                                            placeholder="https://www.ebay.co.uk/itm/..."
+                                            className="w-full bg-transparent border border-[#1925aa] p-2 focus:outline-none"
+                                        />
+                                    </div>
+
                                     <div>
                                         <div className="flex justify-between items-center mb-1">
-                                            <label className="font-bold tracking-wider">
-                                                Images * <span className="opacity-60 text-[10px]"></span>
-                                            </label>
+                                            <label className="font-bold tracking-wider">Images *</label>
                                             <label className="cursor-pointer bg-[#1925aa]/10 hover:bg-[#1925aa] hover:text-white border border-[#1925aa] text-[10px] px-2 py-0.5 font-bold transition-colors uppercase">
                                                 {uploading ? "[ UPLOADING... ]" : "[ + CHOOSE FILES ]"}
                                                 <input
@@ -474,15 +488,15 @@ export const AdminDashboard = () => {
                                                 </td>
                                                 <td className="py-2.5 px-2">£{p.price?.toFixed(2)}</td>
                                                 <td className="py-2.5 px-2">
-                                                        <span
-                                                            className={`px-1.5 py-0.5 border ${
-                                                                p.countInStock > 0
-                                                                    ? "border-[#1925aa] text-[#1925aa]"
-                                                                    : "border-red-600 text-red-600"
-                                                            }`}
-                                                        >
-                                                            {p.countInStock}
-                                                        </span>
+                                                    <span
+                                                        className={`px-1.5 py-0.5 border ${
+                                                            p.countInStock > 0
+                                                                ? "border-[#1925aa] text-[#1925aa]"
+                                                                : "border-red-600 text-red-600 bg-red-50"
+                                                        }`}
+                                                    >
+                                                        {p.countInStock}
+                                                    </span>
                                                 </td>
                                                 <td className="py-2.5 pl-2 text-right space-x-2">
                                                     <button

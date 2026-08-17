@@ -67,6 +67,10 @@ const productSchema = new mongoose.Schema(
             type: Number,
             required: [true, 'Please add stock count'],
             default: 1
+        },
+        ebayUrl: {
+            type: String,
+            default: ''
         }
     },
     {

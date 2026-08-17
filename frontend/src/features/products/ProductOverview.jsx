@@ -14,11 +14,13 @@ export const ProductOverview = ({
                                     product,
                                     handleBuyNow,
                                     checkoutLoading,
-                                    isOutOfStock,
                                 }) => {
     const [selectedImage, setSelectedImage] = useState(0);
 
-    const validSpecs = product.specs
+    const stockCount = Number(product?.countInStock ?? product?.stock ?? 0);
+    const isOutOfStock = isNaN(stockCount) || stockCount <= 0;
+
+    const validSpecs = product?.specs
         ? Object.entries(product.specs).filter(([_, val]) => Boolean(val))
         : [];
 
@@ -29,7 +31,7 @@ export const ProductOverview = ({
                 <div className="lg:col-span-6 flex flex-col min-h-0">
                     <Card padding="p-3 sm:p-4" className="bg-white text-[#1925aa] border border-[#1925aa] flex flex-col justify-between h-full">
                         <div className="w-full h-64 sm:h-96 lg:h-160 bg-[#1925aa]/5 border border-[#1925aa] overflow-hidden flex items-center justify-center p-2 relative">
-                            {product.images && product.images.length > 0 ? (
+                            {product?.images && product.images.length > 0 ? (
                                 <img
                                     src={getHDImageUrl(product.images[selectedImage])}
                                     alt={product.name}
@@ -42,7 +44,7 @@ export const ProductOverview = ({
                             )}
                         </div>
 
-                        {product.images && product.images.length > 1 && (
+                        {product?.images && product.images.length > 1 && (
                             <div className="flex gap-2 overflow-x-auto pt-3 shrink-0 justify-center">
                                 {product.images.map((img, idx) => (
                                     <button
@@ -73,10 +75,10 @@ export const ProductOverview = ({
                             {/* Title and Price */}
                             <div className="border-b-2 border-[#1925aa] pb-2 mb-3 flex justify-between items-baseline gap-2">
                                 <h1 className="font-['Zalando_Sans_Expanded'] text-sm sm:text-lg lg:text-xl font-bold uppercase tracking-wider truncate">
-                                    {product.name}
+                                    {product?.name}
                                 </h1>
                                 <span className="font-mono text-sm sm:text-lg lg:text-xl font-bold shrink-0">
-                                    £{product.price?.toFixed(2)}
+                                    £{product?.price?.toFixed(2)}
                                 </span>
                             </div>
 
@@ -86,7 +88,7 @@ export const ProductOverview = ({
                                     DESCRIPTION
                                 </h2>
                                 <p className="font-mono text-[11px] sm:text-xs uppercase tracking-wide text-[#1925aa]/90 leading-relaxed whitespace-pre-line">
-                                    {product.description}
+                                    {product?.description}
                                 </p>
                             </div>
 
@@ -116,7 +118,7 @@ export const ProductOverview = ({
                             )}
 
                             {/* Gaming Benchmarks */}
-                            {product.benchmarks && product.benchmarks.length > 0 && (
+                            {product?.benchmarks && product.benchmarks.length > 0 && (
                                 <div className="border-t border-[#1925aa]/20 pt-3 mb-4">
                                     <div className="flex justify-between items-center mb-2">
                                         <h2 className="font-['Zalando_Sans_Expanded'] text-[11px] sm:text-xs font-bold uppercase tracking-wider">
@@ -165,6 +167,7 @@ export const ProductOverview = ({
 
                         {/* Action Buttons */}
                         <ProductDetailActions
+                            product={product}
                             handleBuyNow={handleBuyNow}
                             checkoutLoading={checkoutLoading}
                             isOutOfStock={isOutOfStock}
